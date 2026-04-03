@@ -33,6 +33,8 @@ export default function CheckoutPage() {
   const [pickupTime, setPickupTime] = useState('asap');
   const [kitchenNote, setKitchenNote] = useState('');
   const [submitting, setSubmitting] = useState(false);
+  const [syncing, setSyncing] = useState(false);
+  const [cloverFailed, setCloverFailed] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
   const [pickupSlots, setPickupSlots] = useState<PickupSlot[]>([]);
@@ -88,6 +90,7 @@ export default function CheckoutPage() {
   async function handleSubmit() {
     setError(null);
     setFieldErrors({});
+    setCloverFailed(false);
 
     // Client-side validation
     const errors: Record<string, string> = {};
@@ -105,6 +108,7 @@ export default function CheckoutPage() {
     }
 
     setSubmitting(true);
+    setSyncing(true);
 
     try {
       const result = await placeOrder({
@@ -124,22 +128,83 @@ export default function CheckoutPage() {
       });
 
       if (result.success && result.orderId) {
-        clearCart();
-        router.push(`/order/${result.orderId}`);
+        if (result.cloverSynced) {
+          clearCart();
+          router.push(`/order/${result.orderId}`);
+        } else {
+          // Order saved locally but Clover sync failed
+          setCloverFailed(true);
+          setSyncing(false);
+          setSubmitting(false);
+        }
       } else {
         setError(result.error ?? 'Something went wrong');
         if (result.fieldErrors) {
           setFieldErrors(result.fieldErrors);
         }
+        setSyncing(false);
+        setSubmitting(false);
       }
     } catch {
       setError('Something went wrong. Please try again.');
-    } finally {
+      setSyncing(false);
       setSubmitting(false);
     }
   }
 
+  function handleRetry() {
+    setCloverFailed(false);
+    handleSubmit();
+  }
+
   const subtotalCents = getSubtotalCents();
+
+  // Clover failed state — show error with retry and call options
+  if (cloverFailed) {
+    return (
+      <div
+        className="flex min-h-[50vh] flex-col items-center justify-center gap-6 px-6 text-center"
+        data-testid="error-message"
+      >
+        <div className="text-5xl">&#x1F614;</div>
+        <h2 className="font-heading text-xl text-[#4A0E0E]">Oops... something happened</h2>
+        <p className="max-w-md text-sm text-[#8B8178]">
+          We&apos;ll fix it shortly. Please try again or call the restaurant to place your order
+          while we work on the fix.
+        </p>
+        <div className="flex w-full max-w-xs flex-col gap-3">
+          <Button
+            onClick={handleRetry}
+            className="bg-[#D4A84B] font-bold text-[#2D2926]"
+            data-testid="retry-button"
+          >
+            Try Again
+          </Button>
+          <a
+            href="tel:+15551234567"
+            className="text-center font-semibold text-[#C75B39]"
+            data-testid="call-restaurant-link"
+          >
+            &#x1F4DE; Call Restaurant: (555) 123-4567
+          </a>
+        </div>
+      </div>
+    );
+  }
+
+  // Syncing state — shown while waiting for Clover sync
+  if (syncing && submitting) {
+    return (
+      <div
+        className="flex min-h-[50vh] flex-col items-center justify-center gap-4"
+        data-testid="syncing-message"
+      >
+        <Loader2 className="h-12 w-12 animate-spin text-[#D4A84B]" />
+        <h2 className="font-heading text-xl text-[#4A0E0E]">Getting your order through...</h2>
+        <p className="text-sm text-[#8B8178]">hang tight!</p>
+      </div>
+    );
+  }
 
   return (
     <div className="mx-auto max-w-2xl px-4 py-8" data-testid="checkout-page">
