@@ -3,6 +3,7 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import { nanoid } from 'nanoid';
+import { useState, useEffect } from 'react';
 
 export interface CartItem {
   menuItemId: string;
@@ -116,3 +117,27 @@ export const useCartStore = create<CartState>()(
     },
   ),
 );
+
+/**
+ * Hook that returns true once Zustand persist has rehydrated from localStorage.
+ * Use this before checking cart contents to avoid false-empty reads.
+ */
+export function useCartStoreHydration() {
+  const [hydrated, setHydrated] = useState(false);
+
+  useEffect(() => {
+    const unsub = useCartStore.persist.onFinishHydration(() => {
+      setHydrated(true);
+    });
+
+    if (useCartStore.persist.hasHydrated()) {
+      setHydrated(true);
+    }
+
+    return () => {
+      unsub();
+    };
+  }, []);
+
+  return hydrated;
+}

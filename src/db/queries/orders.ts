@@ -39,44 +39,50 @@ export async function createOrder(data: CreateOrderData) {
   const orderNumber = await getNextOrderNumber();
   const now = new Date().toISOString();
 
-  // Use a transaction to insert order + items + status event
-  await db.transaction(async (tx) => {
-    await tx.insert(orders).values({
-      id: orderId,
-      orderNumber,
-      customerName: data.customerName,
-      customerPhone: data.customerPhone,
-      customerEmail: data.customerEmail ?? null,
-      pickupTime: data.pickupTime,
-      kitchenNote: data.kitchenNote ?? null,
-      status: 'received',
-      subtotalCents: data.subtotalCents,
-      idempotencyKey: data.idempotencyKey,
-      cloverSyncStatus: 'pending',
-      createdAt: now,
-      updatedAt: now,
-    });
+  // Use a synchronous transaction (better-sqlite3 is synchronous)
+  db.transaction((tx) => {
+    tx.insert(orders)
+      .values({
+        id: orderId,
+        orderNumber,
+        customerName: data.customerName,
+        customerPhone: data.customerPhone,
+        customerEmail: data.customerEmail ?? null,
+        pickupTime: data.pickupTime,
+        kitchenNote: data.kitchenNote ?? null,
+        status: 'received',
+        subtotalCents: data.subtotalCents,
+        idempotencyKey: data.idempotencyKey,
+        cloverSyncStatus: 'pending',
+        createdAt: now,
+        updatedAt: now,
+      })
+      .run();
 
     for (const item of data.items) {
-      await tx.insert(orderItems).values({
-        id: nanoid(),
-        orderId,
-        menuItemId: item.menuItemId,
-        name: item.name,
-        priceCents: item.priceCents,
-        quantity: item.quantity,
-        specialInstructions: item.specialInstructions ?? null,
-        createdAt: now,
-      });
+      tx.insert(orderItems)
+        .values({
+          id: nanoid(),
+          orderId,
+          menuItemId: item.menuItemId,
+          name: item.name,
+          priceCents: item.priceCents,
+          quantity: item.quantity,
+          specialInstructions: item.specialInstructions ?? null,
+          createdAt: now,
+        })
+        .run();
     }
 
-    await tx.insert(orderStatusEvents).values({
-      id: nanoid(),
-      orderId,
-      status: 'received',
-      source: 'web',
-      createdAt: now,
-    });
+    tx.insert(orderStatusEvents)
+      .values({
+        id: nanoid(),
+        orderId,
+        status: 'received',
+        source: 'web',
+        createdAt: now,
+      })
+      .run();
   });
 
   return { orderId, orderNumber };
@@ -136,16 +142,18 @@ export async function addOrderStatusEvent(orderId: string, status: string, sourc
 export async function updateOrderStatus(orderId: string, status: string, source: string) {
   const now = new Date().toISOString();
 
-  await db.transaction(async (tx) => {
-    await tx.update(orders).set({ status, updatedAt: now }).where(eq(orders.id, orderId));
+  db.transaction((tx) => {
+    tx.update(orders).set({ status, updatedAt: now }).where(eq(orders.id, orderId)).run();
 
-    await tx.insert(orderStatusEvents).values({
-      id: nanoid(),
-      orderId,
-      status,
-      source,
-      createdAt: now,
-    });
+    tx.insert(orderStatusEvents)
+      .values({
+        id: nanoid(),
+        orderId,
+        status,
+        source,
+        createdAt: now,
+      })
+      .run();
   });
 }
 

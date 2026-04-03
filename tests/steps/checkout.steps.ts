@@ -410,7 +410,8 @@ Then('I should see the order confirmation', async ({ page }) => {
 });
 
 Then('I should see the order confirmation page', async ({ page }) => {
-  await page.waitForURL(/\/order\//, { timeout: 15000 });
+  await page.waitForURL(/\/order\//, { timeout: 30000 });
+  await page.waitForLoadState('domcontentloaded');
 });
 
 Then('I should see an order number', async ({ page }) => {

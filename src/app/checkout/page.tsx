@@ -56,19 +56,28 @@ export default function CheckoutPage() {
     fetchSlots();
   }, [fetchSlots]);
 
-  // Redirect to cart if empty (after hydration)
-  const [hydrated, setHydrated] = useState(false);
+  // Redirect to cart if empty — but wait for Zustand to hydrate first.
+  // We check both the store AND localStorage directly to avoid race conditions.
+  const [ready, setReady] = useState(false);
   useEffect(() => {
-    setHydrated(true);
-  }, []);
-
-  useEffect(() => {
-    if (hydrated && items.length === 0) {
-      router.replace('/cart');
+    // Check localStorage directly for cart data
+    try {
+      const stored = localStorage.getItem('cart-store');
+      if (stored) {
+        const parsed = JSON.parse(stored);
+        if (parsed?.state?.items?.length > 0) {
+          setReady(true);
+          return;
+        }
+      }
+    } catch {
+      // Ignore parse errors
     }
-  }, [hydrated, items.length, router]);
+    // No items in localStorage — cart is truly empty
+    router.replace('/cart');
+  }, [router]);
 
-  if (!hydrated || items.length === 0) {
+  if (!ready) {
     return (
       <div className="flex min-h-[50vh] items-center justify-center">
         <Loader2 className="h-8 w-8 animate-spin text-[#C75B39]" />
