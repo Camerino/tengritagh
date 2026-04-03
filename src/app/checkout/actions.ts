@@ -4,6 +4,7 @@ import { z } from 'zod';
 import { isStoreOpen, getEstimatedWaitMinutes } from '@/lib/store-hours';
 import { isValidPickupTime } from '@/lib/pickup-times';
 import { createOrder, getOrderByIdempotencyKey } from '@/db/queries/orders';
+import { syncOrderToClover } from '@/lib/clover-sync';
 
 const placeOrderSchema = z.object({
   customerName: z.string().min(1, 'Name is required').max(100),
@@ -94,6 +95,11 @@ export async function placeOrder(input: PlaceOrderInput): Promise<PlaceOrderResu
       idempotencyKey: data.idempotencyKey,
       items: data.items,
       subtotalCents,
+    });
+
+    // Fire-and-forget: async Clover sync — don't block user confirmation
+    syncOrderToClover(orderId).catch((err) => {
+      console.error('[placeOrder] Clover sync error (non-blocking):', err);
     });
 
     return { success: true, orderId, orderNumber };

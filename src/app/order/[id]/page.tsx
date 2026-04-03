@@ -47,7 +47,11 @@ export default async function OrderPage({ params }: OrderPageProps) {
         <h2 className="font-heading mb-4 text-center text-lg font-bold text-[#2D2926]">
           Order Status
         </h2>
-        <OrderStatusTracker orderId={order.id} initialStatus={order.status} />
+        <OrderStatusTracker
+          orderId={order.id}
+          initialStatus={order.status}
+          initialEvents={order.statusEvents}
+        />
         <p className="mt-4 text-center text-xs text-[#8B8178]">
           This page will update automatically
         </p>

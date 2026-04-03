@@ -7,7 +7,18 @@ const router = Router();
 // POST /v3/merchants/:mId/print_event - Trigger print
 router.post(
   '/v3/merchants/:mId/print_event',
-  (req: Request<{ mId: string }, unknown, PrintEventRequest>, res: Response) => {
+  async (req: Request<{ mId: string }, unknown, PrintEventRequest>, res: Response) => {
+    // Check failure mode
+    const delay = store.getDelay();
+    if (delay > 0) {
+      await new Promise((resolve) => setTimeout(resolve, delay));
+    }
+    const { fail, statusCode } = store.shouldFail('print_event');
+    if (fail) {
+      res.status(statusCode).json({ message: `Mock failure (${statusCode})` });
+      return;
+    }
+
     const body = req.body;
 
     if (!body.orderRef?.id) {

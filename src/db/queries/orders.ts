@@ -98,3 +98,64 @@ export async function getOrderById(id: string) {
 
   return { ...order, items, statusEvents };
 }
+
+/**
+ * Update the Clover sync columns on an order.
+ */
+export async function updateCloverSync(
+  orderId: string,
+  cloverOrderId: string | null,
+  cloverSyncStatus: 'pending' | 'synced' | 'failed',
+) {
+  await db
+    .update(orders)
+    .set({
+      cloverOrderId,
+      cloverSyncStatus,
+      updatedAt: new Date().toISOString(),
+    })
+    .where(eq(orders.id, orderId));
+}
+
+/**
+ * Record a status event in the audit trail.
+ */
+export async function addOrderStatusEvent(orderId: string, status: string, source: string) {
+  await db.insert(orderStatusEvents).values({
+    id: nanoid(),
+    orderId,
+    status,
+    source,
+    createdAt: new Date().toISOString(),
+  });
+}
+
+/**
+ * Update order.status AND record a status event.
+ */
+export async function updateOrderStatus(orderId: string, status: string, source: string) {
+  const now = new Date().toISOString();
+
+  await db.transaction(async (tx) => {
+    await tx.update(orders).set({ status, updatedAt: now }).where(eq(orders.id, orderId));
+
+    await tx.insert(orderStatusEvents).values({
+      id: nanoid(),
+      orderId,
+      status,
+      source,
+      createdAt: now,
+    });
+  });
+}
+
+/**
+ * Count orders with a given cloverSyncStatus.
+ */
+export async function countFailedCloverSyncs(): Promise<number> {
+  const result = await db
+    .select({ count: sql<number>`COUNT(*)` })
+    .from(orders)
+    .where(eq(orders.cloverSyncStatus, 'failed'));
+  return result[0]?.count ?? 0;
+}

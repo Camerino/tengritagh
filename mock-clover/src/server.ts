@@ -9,7 +9,7 @@ const DELAY_MS = parseInt(process.env.MOCK_DELAY_MS ?? '0', 10);
 // Middleware
 app.use(express.json());
 
-// Auth validation middleware - accept any Bearer token
+// Auth validation middleware - accept any Bearer token (only for /v3 routes)
 app.use('/v3', (req, res, next) => {
   const authHeader = req.headers.authorization;
   if (!authHeader?.startsWith('Bearer ')) {
@@ -19,7 +19,7 @@ app.use('/v3', (req, res, next) => {
   next();
 });
 
-// Optional delay to simulate network latency
+// Optional delay to simulate network latency (global, on top of per-request config)
 if (DELAY_MS > 0) {
   app.use('/v3', (_req, _res, next) => {
     setTimeout(next, DELAY_MS);
@@ -32,7 +32,7 @@ app.use('/v3', (req, _res, next) => {
   next();
 });
 
-// Routes
+// Routes (ordersRouter includes both /v3 and /__admin routes)
 app.use(ordersRouter);
 app.use(printRouter);
 
