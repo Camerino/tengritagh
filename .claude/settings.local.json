@@ -19,7 +19,9 @@
       "Bash(pkill -f \"next dev\")",
       "Bash(pkill -f \"tsx.*server\")",
       "Bash(curl -s http://localhost:3000)",
-      "Bash(curl -s http://localhost:3000/checkout)"
+      "Bash(curl -s http://localhost:3000/checkout)",
+      "Bash(gh api:*)",
+      "Bash(git checkout:*)"
     ]
   }
 }
