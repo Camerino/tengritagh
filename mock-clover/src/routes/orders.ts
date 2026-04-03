@@ -173,6 +173,19 @@ router.put('/__admin/fail', (req: Request, res: Response) => {
   res.json({ failMode: enabled });
 });
 
+// PUT /__admin/config — set advanced failure / delay configuration (alias)
+router.put('/__admin/config', (req: Request, res: Response) => {
+  const config = req.body as Record<string, unknown>;
+  store.setAdminConfig({
+    failNext: typeof config.failNext === 'number' ? config.failNext : 0,
+    statusCode: typeof config.statusCode === 'number' ? config.statusCode : 500,
+    failEndpoints: Array.isArray(config.failEndpoints) ? (config.failEndpoints as string[]) : [],
+    delayMs: typeof config.delayMs === 'number' ? config.delayMs : 0,
+    delayCount: typeof config.delayCount === 'number' ? config.delayCount : 0,
+  });
+  res.json({ ok: true, config: store.getAdminConfig() });
+});
+
 // POST /__admin/config — set advanced failure / delay configuration
 router.post('/__admin/config', (req: Request, res: Response) => {
   const config = req.body as Record<string, unknown>;

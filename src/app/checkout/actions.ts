@@ -5,7 +5,7 @@ import { inArray } from 'drizzle-orm';
 import { isStoreOpen, getEstimatedWaitMinutes } from '@/lib/store-hours';
 import { isValidPickupTime } from '@/lib/pickup-times';
 import { createOrder, getOrderByIdempotencyKey } from '@/db/queries/orders';
-import { syncOrderToClover } from '@/lib/clover-sync';
+import { syncOrderToCloverBlocking } from '@/lib/clover-sync';
 import { db } from '@/db';
 import { menuItems } from '@/db/schema';
 
@@ -37,6 +37,8 @@ interface PlaceOrderResult {
   orderNumber?: number;
   error?: string;
   fieldErrors?: Record<string, string>;
+  cloverSynced?: boolean;
+  cloverError?: string;
 }
 
 export async function placeOrder(input: PlaceOrderInput): Promise<PlaceOrderResult> {
@@ -55,13 +57,25 @@ export async function placeOrder(input: PlaceOrderInput): Promise<PlaceOrderResu
 
   const data = parsed.data;
 
-  // 2. Check idempotency key
+  // 2. Check idempotency key — if order exists, retry Clover sync if needed
   const existingOrder = await getOrderByIdempotencyKey(data.idempotencyKey);
   if (existingOrder) {
+    if (existingOrder.cloverSyncStatus === 'synced') {
+      return {
+        success: true,
+        orderId: existingOrder.id,
+        orderNumber: existingOrder.orderNumber,
+        cloverSynced: true,
+      };
+    }
+    // Order exists but Clover sync failed or is pending — retry
+    const syncResult = await syncOrderToCloverBlocking(existingOrder.id);
     return {
       success: true,
       orderId: existingOrder.id,
       orderNumber: existingOrder.orderNumber,
+      cloverSynced: syncResult.success,
+      cloverError: syncResult.error,
     };
   }
 
@@ -141,12 +155,16 @@ export async function placeOrder(input: PlaceOrderInput): Promise<PlaceOrderResu
       subtotalCents,
     });
 
-    // Fire-and-forget: async Clover sync — don't block user confirmation
-    syncOrderToClover(orderId).catch((err) => {
-      console.error('[placeOrder] Clover sync error (non-blocking):', err);
-    });
+    // Blocking Clover sync — wait for result before returning to client
+    const syncResult = await syncOrderToCloverBlocking(orderId);
 
-    return { success: true, orderId, orderNumber };
+    return {
+      success: true,
+      orderId,
+      orderNumber,
+      cloverSynced: syncResult.success,
+      cloverError: syncResult.error,
+    };
   } catch (error) {
     console.error('Failed to create order:', error);
     return {
