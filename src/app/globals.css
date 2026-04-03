@@ -1,0 +1,59 @@
+@import 'tailwindcss';
+
+@theme {
+  /* Design Tokens - Colors */
+  --color-terracotta: #c75b39;
+  --color-burgundy: #6b1d2a;
+  --color-gold: #d4a84b;
+  --color-cream: #fff8f0;
+  --color-warm-cream: #faf7ee;
+  --color-charcoal: #2d2926;
+  --color-warm-gray: #8b8178;
+
+  /* shadcn/ui compatible tokens */
+  --color-background: #fff8f0;
+  --color-foreground: #2d2926;
+  --color-card: #ffffff;
+  --color-card-foreground: #2d2926;
+  --color-popover: #ffffff;
+  --color-popover-foreground: #2d2926;
+  --color-primary: #c75b39;
+  --color-primary-foreground: #fff8f0;
+  --color-secondary: #faf7ee;
+  --color-secondary-foreground: #2d2926;
+  --color-muted: #faf7ee;
+  --color-muted-foreground: #8b8178;
+  --color-accent: #d4a84b;
+  --color-accent-foreground: #2d2926;
+  --color-destructive: #dc2626;
+  --color-destructive-foreground: #fff8f0;
+  --color-border: #e5ddd4;
+  --color-input: #e5ddd4;
+  --color-ring: #c75b39;
+
+  /* Radius */
+  --radius: 0.625rem;
+
+  /* Font families */
+  --font-heading: 'Playfair Display', serif;
+  --font-body: 'Inter', sans-serif;
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground font-body antialiased;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: var(--font-heading);
+  }
+}

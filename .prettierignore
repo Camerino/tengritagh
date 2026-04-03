@@ -1,0 +1,10 @@
+node_modules
+.next
+dist
+build
+coverage
+data
+*.db
+pnpm-lock.yaml
+mock-clover/node_modules
+mock-clover/dist

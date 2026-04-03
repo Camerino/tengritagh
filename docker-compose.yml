@@ -1,0 +1,26 @@
+services:
+  app:
+    build: .
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+      - DATABASE_URL=./data/tengritagh.db
+      - CLOVER_API_BASE_URL=http://mock-clover:3001
+      - CLOVER_MERCHANT_ID=MOCK_MERCHANT
+      - CLOVER_API_TOKEN=mock-api-token
+    depends_on:
+      - mock-clover
+    volumes:
+      - app-data:/app/data
+
+  mock-clover:
+    build: ./mock-clover
+    ports:
+      - "3001:3001"
+    environment:
+      - PORT=3001
+      - MOCK_DELAY_MS=0
+
+volumes:
+  app-data:

@@ -1,0 +1,1649 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tengri Tagh - UX/UI Wireframes</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600;700&display=swap');
+
+  :root {
+    --terracotta: #C75B39;
+    --burgundy: #6B1D2A;
+    --gold: #D4A84B;
+    --cream: #FFF8F0;
+    --warm-cream: #FAF7EE;
+    --charcoal: #2D2926;
+    --warm-gray: #8B8178;
+    --light-gray: #E8E2DA;
+    --deep-gold: #B8923E;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: #f5f5f5;
+    color: var(--charcoal);
+  }
+
+  /* ===== WIREFRAME NAVIGATION ===== */
+  .wireframe-nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    background: var(--charcoal);
+    padding: 12px 24px;
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    align-items: center;
+  }
+  .wireframe-nav h3 {
+    color: var(--gold);
+    font-family: 'Playfair Display', serif;
+    margin-right: 16px;
+    white-space: nowrap;
+    font-size: 14px;
+  }
+  .wireframe-nav a {
+    color: white;
+    text-decoration: none;
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 13px;
+    white-space: nowrap;
+    border: 1px solid rgba(255,255,255,0.2);
+    transition: all 0.2s;
+  }
+  .wireframe-nav a:hover, .wireframe-nav a.active {
+    background: var(--terracotta);
+    border-color: var(--terracotta);
+  }
+  .viewport-toggle {
+    margin-left: auto;
+    display: flex;
+    gap: 4px;
+  }
+  .viewport-toggle button {
+    background: none;
+    border: 1px solid rgba(255,255,255,0.3);
+    color: white;
+    padding: 6px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 12px;
+  }
+  .viewport-toggle button.active {
+    background: var(--gold);
+    color: var(--charcoal);
+    border-color: var(--gold);
+  }
+
+  /* ===== PAGE SECTIONS ===== */
+  .page-section {
+    padding: 80px 24px 40px;
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+  .page-section h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 28px;
+    margin-bottom: 8px;
+    color: var(--burgundy);
+  }
+  .page-section .subtitle {
+    color: var(--warm-gray);
+    margin-bottom: 24px;
+    font-size: 14px;
+  }
+
+  /* ===== DEVICE FRAMES ===== */
+  .device-row {
+    display: flex;
+    gap: 40px;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .device-frame {
+    background: white;
+    border-radius: 24px;
+    overflow: hidden;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.12);
+    flex-shrink: 0;
+  }
+  .device-frame.mobile {
+    width: 375px;
+  }
+  .device-frame.desktop {
+    width: 900px;
+  }
+  .device-label {
+    background: var(--charcoal);
+    color: white;
+    text-align: center;
+    padding: 8px;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+
+  /* ===== RESTAURANT WEBSITE COMPONENTS ===== */
+
+  /* Header */
+  .site-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 20px;
+    background: var(--cream);
+    border-bottom: 1px solid var(--light-gray);
+  }
+  .site-header .logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 18px;
+    color: var(--burgundy);
+    font-weight: 700;
+  }
+  .site-header .logo small {
+    display: block;
+    font-size: 9px;
+    font-weight: 400;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--terracotta);
+    font-family: 'Inter', sans-serif;
+  }
+  .hamburger {
+    width: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    cursor: pointer;
+  }
+  .hamburger span {
+    height: 2px;
+    background: var(--charcoal);
+    border-radius: 2px;
+  }
+  .nav-links {
+    display: flex;
+    gap: 24px;
+    font-size: 14px;
+    font-weight: 500;
+  }
+  .nav-links a {
+    color: var(--charcoal);
+    text-decoration: none;
+  }
+  .nav-links a.cta {
+    background: var(--terracotta);
+    color: white;
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-weight: 600;
+  }
+  .cart-icon {
+    position: relative;
+    font-size: 20px;
+  }
+  .cart-badge {
+    position: absolute;
+    top: -6px;
+    right: -8px;
+    background: var(--terracotta);
+    color: white;
+    font-size: 10px;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+  }
+
+  /* Hero */
+  .hero {
+    position: relative;
+    height: 600px;
+    background: linear-gradient(135deg, var(--burgundy) 0%, #4a1520 60%, var(--charcoal) 100%);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 40px 24px;
+    overflow: hidden;
+  }
+  /* Original subtle cross pattern on full hero */
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23D4A84B' fill-opacity='0.08'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    opacity: 0.5;
+  }
+  /* Green & orange etles horizontal stripe in upper half */
+  .hero::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 80px;
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80' viewBox='0 0 80 80'%3E%3Cdefs%3E%3Cfilter id='ik' x='-20%25' y='-20%25' width='140%25' height='140%25'%3E%3CfeGaussianBlur stdDeviation='1.5'/%3E%3C/filter%3E%3C/defs%3E%3Crect width='80' height='80' fill='%23200e12' opacity='0.9'/%3E%3C!-- Vertical stripes --%3E%3Crect x='0' y='0' width='2' height='80' fill='%23D4A84B' opacity='0.3'/%3E%3Crect x='78' y='0' width='2' height='80' fill='%23D4A84B' opacity='0.3'/%3E%3Crect x='26' y='0' width='1.5' height='80' fill='%23e87e3a' opacity='0.2'/%3E%3Crect x='52' y='0' width='1.5' height='80' fill='%23e87e3a' opacity='0.2'/%3E%3C!-- Left diamond column: green + orange --%3E%3Cg filter='url(%23ik)' opacity='0.8'%3E%3Cpolygon points='14,0 26,20 14,40 2,20' fill='%231a7a4c' opacity='0.7'/%3E%3Cpolygon points='14,6 21,20 14,34 7,20' fill='%23e87e3a' opacity='0.6'/%3E%3Cpolygon points='14,12 18,20 14,28 10,20' fill='%23D4A84B' opacity='0.5'/%3E%3Cpolygon points='14,40 26,60 14,80 2,60' fill='%23e87e3a' opacity='0.65'/%3E%3Cpolygon points='14,46 21,60 14,74 7,60' fill='%231a7a4c' opacity='0.6'/%3E%3Cpolygon points='14,52 18,60 14,68 10,60' fill='%23f5f0e1' opacity='0.35'/%3E%3C/g%3E%3C!-- Center diamond column --%3E%3Cg filter='url(%23ik)' opacity='0.75'%3E%3Cpolygon points='40,10 50,25 40,40 30,25' fill='%23e87e3a' opacity='0.7'/%3E%3Cpolygon points='40,15 46,25 40,35 34,25' fill='%231a7a4c' opacity='0.6'/%3E%3Cpolygon points='40,19 43,25 40,31 37,25' fill='%23D4A84B' opacity='0.5'/%3E%3Cpolygon points='40,45 50,60 40,75 30,60' fill='%231a7a4c' opacity='0.65'/%3E%3Cpolygon points='40,50 46,60 40,70 34,60' fill='%23e87e3a' opacity='0.6'/%3E%3Cpolygon points='40,54 43,60 40,66 37,60' fill='%23f5f0e1' opacity='0.35'/%3E%3C/g%3E%3C!-- Right diamond column --%3E%3Cg filter='url(%23ik)' opacity='0.8'%3E%3Cpolygon points='66,0 78,20 66,40 54,20' fill='%231a7a4c' opacity='0.65'/%3E%3Cpolygon points='66,6 73,20 66,34 59,20' fill='%23D4A84B' opacity='0.55'/%3E%3Cpolygon points='66,12 70,20 66,28 62,20' fill='%23e87e3a' opacity='0.5'/%3E%3Cpolygon points='66,40 78,60 66,80 54,60' fill='%23e87e3a' opacity='0.65'/%3E%3Cpolygon points='66,46 73,60 66,74 59,60' fill='%231a7a4c' opacity='0.55'/%3E%3Cpolygon points='66,52 70,60 66,68 62,60' fill='%23f5f0e1' opacity='0.35'/%3E%3C/g%3E%3C/svg%3E");
+    opacity: 0.6;
+    z-index: 1;
+    mask-image: linear-gradient(to bottom, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.5) 60%, transparent 100%);
+    -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.5) 60%, transparent 100%);
+  }
+  .hero .geometric-border {
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 4px;
+    background: repeating-linear-gradient(90deg, var(--gold) 0px, var(--gold) 20px, transparent 20px, transparent 24px, var(--terracotta) 24px, var(--terracotta) 44px, transparent 44px, transparent 48px);
+    z-index: 2;
+  }
+  .hero .chef-pulling-noodles {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid var(--gold);
+    box-shadow: 0 4px 16px rgba(0,0,0,0.5);
+    z-index: 3;
+  }
+  .hero h1 {
+    font-family: 'Playfair Display', serif;
+    color: var(--cream);
+    font-size: 36px;
+    line-height: 1.2;
+    margin-bottom: 8px;
+    position: relative;
+    z-index: 1;
+  }
+  .hero .uyghur-script {
+    font-size: 22px;
+    color: var(--gold);
+    opacity: 0.6;
+    margin-bottom: 12px;
+    direction: rtl;
+    position: relative;
+    z-index: 1;
+  }
+  .hero .tagline {
+    color: rgba(255,248,240,0.8);
+    font-size: 15px;
+    margin-bottom: 28px;
+    max-width: 400px;
+    line-height: 1.5;
+    position: relative;
+    z-index: 1;
+  }
+  .hero-cta-group {
+    display: flex;
+    gap: 12px;
+    position: relative;
+    z-index: 2;
+  }
+  .hero-food-photos {
+    display: flex;
+    gap: 16px;
+    position: relative;
+    z-index: 2;
+    margin-top: 28px;
+  }
+  .hero-food-photos img {
+    width: 150px;
+    height: 110px;
+    object-fit: cover;
+    border-radius: 12px;
+    border: 2px solid rgba(212,168,75,0.4);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+  }
+  .hero-food-photos .photo-label {
+    position: absolute;
+    bottom: -18px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 11px;
+    color: rgba(255,248,240,0.6);
+    white-space: nowrap;
+    font-family: 'Inter', sans-serif;
+  }
+  .hero-food-photos .photo-wrapper {
+    position: relative;
+  }
+  .btn-primary {
+    background: var(--gold);
+    color: var(--charcoal);
+    border: none;
+    padding: 14px 28px;
+    border-radius: 8px;
+    font-weight: 700;
+    font-size: 15px;
+    cursor: pointer;
+    font-family: 'Inter', sans-serif;
+    letter-spacing: 0.3px;
+  }
+  .btn-secondary {
+    background: transparent;
+    color: var(--cream);
+    border: 2px solid rgba(255,248,240,0.4);
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 15px;
+    cursor: pointer;
+    font-family: 'Inter', sans-serif;
+  }
+
+  /* Decorative Divider */
+  .decorative-divider {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    padding: 24px 0;
+  }
+  .decorative-divider::before, .decorative-divider::after {
+    content: '';
+    height: 1px;
+    width: 60px;
+    background: var(--light-gray);
+  }
+  .decorative-divider .diamond {
+    width: 8px;
+    height: 8px;
+    background: var(--gold);
+    transform: rotate(45deg);
+  }
+
+  /* Featured Dishes */
+  .featured-section {
+    background: var(--cream);
+    padding: 40px 20px;
+  }
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 24px;
+    text-align: center;
+    color: var(--burgundy);
+    margin-bottom: 4px;
+  }
+  .section-subtitle {
+    text-align: center;
+    color: var(--warm-gray);
+    font-size: 13px;
+    margin-bottom: 24px;
+  }
+  .dish-scroll {
+    display: flex;
+    gap: 16px;
+    overflow-x: auto;
+    padding-bottom: 8px;
+    scroll-snap-type: x mandatory;
+  }
+  .dish-card {
+    min-width: 260px;
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    scroll-snap-align: start;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  }
+  .dish-card .img-placeholder {
+    height: 160px;
+    background: linear-gradient(135deg, var(--terracotta), var(--burgundy));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: rgba(255,255,255,0.3);
+    font-size: 48px;
+  }
+  .dish-card .info {
+    padding: 16px;
+  }
+  .dish-card .info h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 16px;
+    margin-bottom: 4px;
+  }
+  .dish-card .info p {
+    font-size: 12px;
+    color: var(--warm-gray);
+    line-height: 1.4;
+    margin-bottom: 8px;
+  }
+  .dish-card .info .price {
+    color: var(--terracotta);
+    font-weight: 700;
+    font-size: 16px;
+  }
+
+  /* Preparation Story */
+  .prep-story {
+    background: var(--charcoal);
+    padding: 48px 20px;
+    text-align: center;
+  }
+  .prep-story h2 {
+    font-family: 'Playfair Display', serif;
+    color: var(--cream);
+    font-size: 22px;
+    margin-bottom: 6px;
+  }
+  .prep-story .prep-tagline {
+    color: var(--gold);
+    font-size: 13px;
+    font-style: italic;
+    margin-bottom: 28px;
+    opacity: 0.8;
+  }
+  .prep-steps {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  .prep-step {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    background: rgba(255,248,240,0.05);
+    border-radius: 12px;
+    padding: 14px;
+    text-align: left;
+  }
+  .prep-step .gif-circle {
+    width: 80px;
+    height: 80px;
+    min-width: 80px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid var(--gold);
+  }
+  .prep-step-text h4 {
+    color: var(--gold);
+    font-size: 14px;
+    font-weight: 700;
+    margin-bottom: 3px;
+  }
+  .prep-step-text p {
+    color: rgba(255,248,240,0.6);
+    font-size: 12px;
+    line-height: 1.5;
+  }
+
+  /* Google Reviews */
+  .reviews-section {
+    background: white;
+    padding: 40px 20px;
+  }
+  .review-card {
+    background: var(--cream);
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 12px;
+  }
+  .review-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 8px;
+  }
+  .review-avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: var(--light-gray);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 14px;
+    color: var(--warm-gray);
+  }
+  .review-name {
+    font-weight: 600;
+    font-size: 14px;
+  }
+  .review-date {
+    font-size: 11px;
+    color: var(--warm-gray);
+  }
+  .stars {
+    color: var(--gold);
+    font-size: 14px;
+    margin-bottom: 8px;
+  }
+  .review-text {
+    font-size: 13px;
+    line-height: 1.5;
+    color: #555;
+  }
+
+  /* Order Platforms */
+  .platforms-section {
+    background: var(--warm-cream);
+    padding: 32px 20px;
+    text-align: center;
+  }
+  .platform-buttons {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 16px;
+  }
+  .platform-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: white;
+    border: 1px solid var(--light-gray);
+    padding: 12px 20px;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 13px;
+    cursor: pointer;
+  }
+  .platform-btn .platform-dot {
+    width: 24px;
+    height: 24px;
+    border-radius: 6px;
+  }
+
+  /* About Teaser */
+  .about-teaser {
+    background: var(--cream);
+    padding: 40px 20px;
+    display: flex;
+    gap: 24px;
+    align-items: center;
+  }
+  .about-teaser .img-placeholder {
+    width: 140px;
+    height: 140px;
+    min-width: 140px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, var(--terracotta), var(--burgundy));
+  }
+  .about-teaser h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px;
+    color: var(--burgundy);
+    margin-bottom: 8px;
+  }
+  .about-teaser p {
+    font-size: 13px;
+    color: var(--warm-gray);
+    line-height: 1.6;
+    margin-bottom: 12px;
+  }
+  .link-arrow {
+    color: var(--terracotta);
+    font-weight: 600;
+    font-size: 14px;
+    text-decoration: none;
+  }
+
+  /* Location Strip */
+  .location-strip {
+    background: white;
+    padding: 24px 20px;
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    border-top: 1px solid var(--light-gray);
+    border-bottom: 1px solid var(--light-gray);
+  }
+  .location-strip .map-thumb {
+    width: 80px;
+    height: 80px;
+    min-width: 80px;
+    border-radius: 8px;
+    background: #e0ddd8;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+  }
+  .location-info h4 {
+    font-size: 14px;
+    font-weight: 700;
+    margin-bottom: 4px;
+  }
+  .location-info p {
+    font-size: 12px;
+    color: var(--warm-gray);
+    line-height: 1.5;
+  }
+  .location-info .open-badge {
+    display: inline-block;
+    background: #2d7a3a;
+    color: white;
+    font-size: 11px;
+    padding: 2px 8px;
+    border-radius: 10px;
+    font-weight: 600;
+    margin-top: 4px;
+  }
+
+  /* Footer */
+  .site-footer {
+    background: var(--charcoal);
+    padding: 32px 20px 20px;
+  }
+  .footer-top {
+    display: flex;
+    justify-content: space-between;
+    gap: 24px;
+    margin-bottom: 24px;
+    flex-wrap: wrap;
+  }
+  .footer-col h4 {
+    color: var(--gold);
+    font-family: 'Playfair Display', serif;
+    font-size: 14px;
+    margin-bottom: 12px;
+  }
+  .footer-col p, .footer-col a {
+    color: rgba(255,248,240,0.6);
+    font-size: 12px;
+    line-height: 2;
+    text-decoration: none;
+    display: block;
+  }
+  .social-icons {
+    display: flex;
+    gap: 12px;
+    margin-top: 8px;
+  }
+  .social-icon {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    border: 1px solid rgba(255,248,240,0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    color: var(--cream);
+  }
+  .footer-bottom {
+    border-top: 1px solid rgba(255,248,240,0.1);
+    padding-top: 16px;
+    text-align: center;
+    font-size: 11px;
+    color: rgba(255,248,240,0.3);
+  }
+  .footer-geometric {
+    height: 4px;
+    background: repeating-linear-gradient(90deg, var(--gold) 0px, var(--gold) 12px, transparent 12px, transparent 16px, var(--terracotta) 16px, var(--terracotta) 28px, transparent 28px, transparent 32px);
+    margin-bottom: 0;
+  }
+
+  /* ===== MENU PAGE ===== */
+  .category-tabs {
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    padding: 12px 20px;
+    background: white;
+    border-bottom: 1px solid var(--light-gray);
+    position: sticky;
+    top: 0;
+  }
+  .category-tab {
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 500;
+    white-space: nowrap;
+    border: 1px solid var(--light-gray);
+    background: white;
+    cursor: pointer;
+  }
+  .category-tab.active {
+    background: var(--burgundy);
+    color: white;
+    border-color: var(--burgundy);
+  }
+  .menu-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    padding: 16px 20px;
+    background: var(--warm-cream);
+  }
+  .menu-item-card {
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+  }
+  .menu-item-card .img {
+    height: 110px;
+    background: linear-gradient(135deg, var(--terracotta), var(--burgundy));
+    position: relative;
+  }
+  .menu-item-card .card-body {
+    padding: 12px;
+  }
+  .menu-item-card h4 {
+    font-size: 13px;
+    font-weight: 600;
+    margin-bottom: 1px;
+  }
+  .menu-item-card .name-zh {
+    font-size: 11px;
+    color: var(--warm-gray);
+    margin-bottom: 2px;
+  }
+  .menu-item-card .desc {
+    font-size: 11px;
+    color: var(--warm-gray);
+    line-height: 1.3;
+    margin-bottom: 8px;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  .menu-item-card .card-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .menu-item-card .price {
+    font-weight: 700;
+    color: var(--charcoal);
+    font-size: 14px;
+  }
+  .add-btn {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: var(--terracotta);
+    color: white;
+    border: none;
+    font-size: 18px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 300;
+  }
+
+  /* Sticky Cart Bar */
+  .sticky-cart-bar {
+    position: sticky;
+    bottom: 0;
+    background: var(--burgundy);
+    padding: 14px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: white;
+  }
+  .sticky-cart-bar .cart-info {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+    font-weight: 500;
+  }
+  .sticky-cart-bar .view-cart-btn {
+    background: var(--gold);
+    color: var(--charcoal);
+    border: none;
+    padding: 10px 20px;
+    border-radius: 6px;
+    font-weight: 700;
+    font-size: 14px;
+    cursor: pointer;
+  }
+
+  /* ===== CART PAGE ===== */
+  .cart-header {
+    padding: 20px;
+    background: var(--cream);
+    border-bottom: 1px solid var(--light-gray);
+  }
+  .cart-header h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 24px;
+    color: var(--burgundy);
+  }
+  .cart-item {
+    display: flex;
+    gap: 12px;
+    padding: 16px 20px;
+    border-bottom: 1px solid var(--light-gray);
+    align-items: center;
+  }
+  .cart-item .thumb {
+    width: 64px;
+    height: 64px;
+    border-radius: 8px;
+    background: linear-gradient(135deg, var(--terracotta), var(--burgundy));
+    flex-shrink: 0;
+  }
+  .cart-item .item-details {
+    flex: 1;
+  }
+  .cart-item .item-details h4 {
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 2px;
+  }
+  .cart-item .item-details .note {
+    font-size: 11px;
+    color: var(--warm-gray);
+    font-style: italic;
+  }
+  .qty-control {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 6px;
+  }
+  .qty-btn {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    border: 1px solid var(--light-gray);
+    background: white;
+    font-size: 16px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .qty-num {
+    font-weight: 700;
+    font-size: 14px;
+    min-width: 20px;
+    text-align: center;
+  }
+  .cart-item .item-price {
+    font-weight: 700;
+    font-size: 16px;
+    white-space: nowrap;
+  }
+  .cart-summary {
+    padding: 20px;
+    background: var(--cream);
+  }
+  .cart-summary .row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 8px;
+    font-size: 14px;
+  }
+  .cart-summary .total {
+    font-weight: 700;
+    font-size: 18px;
+    padding-top: 12px;
+    border-top: 2px solid var(--charcoal);
+    margin-top: 8px;
+  }
+  .checkout-btn {
+    display: block;
+    width: 100%;
+    padding: 16px;
+    background: var(--gold);
+    color: var(--charcoal);
+    border: none;
+    border-radius: 8px;
+    font-weight: 700;
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 16px;
+    font-family: 'Inter', sans-serif;
+  }
+  .continue-link {
+    display: block;
+    text-align: center;
+    margin-top: 12px;
+    color: var(--terracotta);
+    font-size: 14px;
+    font-weight: 500;
+  }
+
+  /* ===== CHECKOUT PAGE ===== */
+  .checkout-section {
+    padding: 20px;
+  }
+  .checkout-section h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 18px;
+    color: var(--burgundy);
+    margin-bottom: 16px;
+  }
+  .form-group {
+    margin-bottom: 16px;
+  }
+  .form-group label {
+    display: block;
+    font-size: 13px;
+    font-weight: 600;
+    margin-bottom: 6px;
+    color: var(--charcoal);
+  }
+  .form-group label .required {
+    color: var(--terracotta);
+  }
+  .form-input {
+    width: 100%;
+    padding: 12px 14px;
+    border: 1px solid var(--light-gray);
+    border-radius: 8px;
+    font-size: 15px;
+    font-family: 'Inter', sans-serif;
+    background: white;
+  }
+  .form-input:focus {
+    outline: none;
+    border-color: var(--gold);
+    box-shadow: 0 0 0 3px rgba(212,168,75,0.15);
+  }
+  .pickup-time-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 8px;
+  }
+  .time-slot {
+    padding: 10px;
+    border: 1px solid var(--light-gray);
+    border-radius: 8px;
+    text-align: center;
+    font-size: 13px;
+    cursor: pointer;
+    background: white;
+  }
+  .time-slot.active {
+    border-color: var(--gold);
+    background: rgba(212,168,75,0.1);
+    font-weight: 600;
+  }
+  .time-slot.asap {
+    grid-column: 1 / -1;
+    background: var(--cream);
+    border-color: var(--gold);
+    font-weight: 600;
+    color: var(--burgundy);
+  }
+  .payment-notice {
+    background: var(--cream);
+    border: 1px solid var(--light-gray);
+    border-radius: 8px;
+    padding: 14px 16px;
+    font-size: 13px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--warm-gray);
+  }
+
+  /* ===== ORDER CONFIRMATION ===== */
+  .confirmation-hero {
+    background: linear-gradient(135deg, #2d7a3a, #1a5c26);
+    padding: 40px 20px;
+    text-align: center;
+    color: white;
+  }
+  .check-circle {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    border: 3px solid white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 32px;
+    margin: 0 auto 16px;
+  }
+  .confirmation-hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 26px;
+    margin-bottom: 4px;
+  }
+  .confirmation-hero .order-num {
+    font-size: 14px;
+    opacity: 0.8;
+  }
+  .status-tracker {
+    display: flex;
+    justify-content: center;
+    gap: 0;
+    padding: 32px 20px;
+    background: white;
+  }
+  .status-step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    flex: 1;
+  }
+  .status-dot {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: var(--light-gray);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    margin-bottom: 8px;
+    z-index: 1;
+  }
+  .status-dot.active {
+    background: var(--gold);
+    color: white;
+  }
+  .status-dot.done {
+    background: #2d7a3a;
+    color: white;
+  }
+  .status-step:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    top: 12px;
+    left: 50%;
+    width: 100%;
+    height: 2px;
+    background: var(--light-gray);
+  }
+  .status-step.completed:not(:last-child)::after {
+    background: #2d7a3a;
+  }
+  .status-label {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--warm-gray);
+    text-align: center;
+  }
+  .status-step.active-step .status-label {
+    color: var(--charcoal);
+  }
+
+  /* Annotation markers */
+  .annotation {
+    position: absolute;
+    background: #FF6B35;
+    color: white;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 6px;
+    border-radius: 4px;
+    z-index: 10;
+    white-space: nowrap;
+    font-family: 'Inter', sans-serif;
+  }
+</style>
+</head>
+<body>
+
+<!-- Wireframe Navigation -->
+<nav class="wireframe-nav">
+  <h3>Tengri Tagh Wireframes</h3>
+  <a href="#home" class="active">Homepage</a>
+  <a href="#menu">Menu</a>
+  <a href="#cart">Cart</a>
+  <a href="#checkout">Checkout</a>
+  <a href="#confirmation">Confirmation</a>
+</nav>
+
+<!-- ============================================ -->
+<!-- HOMEPAGE -->
+<!-- ============================================ -->
+<section class="page-section" id="home">
+  <h2>Homepage</h2>
+  <p class="subtitle">Mobile (375px) — The primary experience. Inspired by Dishoom's cultural storytelling + Sweetgreen's ordering-first CTA</p>
+
+  <div class="device-row">
+    <div class="device-frame mobile">
+      <div class="device-label">iPhone 14 — 375px</div>
+
+      <!-- Header -->
+      <div class="site-header">
+        <div class="logo">Tengri Tagh<small>Uyghur Cuisine</small><small style="color:var(--warm-gray);letter-spacing:0.5px;font-size:10px;margin-top:1px">(555) 123-4567</small></div>
+        <div style="display:flex;align-items:center;gap:16px">
+          <div class="cart-icon">&#128722;<div class="cart-badge">2</div></div>
+          <div class="hamburger"><span></span><span></span><span></span></div>
+        </div>
+      </div>
+
+      <!-- Hero -->
+      <div class="hero">
+        <div class="geometric-border"></div>
+        <img class="chef-pulling-noodles" src="https://media1.giphy.com/media/spzjxSXCqoV379zz2d/giphy.gif" alt="Chef hand-pulling laghman noodles">
+        <!-- Alternatives to try:
+          Wen Cheng #2: https://media3.giphy.com/media/8Yeg1OITtpyDdTcCb0/giphy.gif
+          Wen Cheng #3: https://media1.giphy.com/media/v3bBafVhIR6lxNsdZO/giphy.gif
+          Wen Cheng #4: https://media1.giphy.com/media/4eKnJVT356N6RbboTC/giphy.gif
+          Tenor:        https://media1.tenor.com/m/ANg-3slQ0aIAAAAC/noodles-hand-pulled-noodles.gif
+          Munchies:     https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExbWF5cGN5c2tocmFmenl2MWZ0eHR4Z3I5dWcza2ZmYjFqbW8yMnJ2biZlcD12MV9naWZzX3NlYXJjaCZjdD1n/1Ya6a68LBjXf2YWQmZ/giphy.gif
+        -->
+        <div class="uyghur-script">تەڭرىتاغ ئۇيغۇر تائاملىرى</div>
+        <h1>Tengri Tagh</h1>
+        <p class="tagline">Authentic Uyghur Cuisine from the Heart of the Silk Road<br><a href="https://maps.google.com/?q=Times+Square+NYC" target="_blank" style="font-size:12px;color:var(--gold);opacity:0.9;text-decoration:none;border-bottom:1px dotted var(--gold)">&#128205; Near Times Square, NYC</a></p>
+        <div class="hero-cta-group">
+          <button class="btn-primary">Order for Pickup</button>
+          <button class="btn-secondary">View Menu</button>
+        </div>
+        <div class="hero-food-photos">
+          <div class="photo-wrapper">
+            <img src="https://images.squarespace-cdn.com/content/v1/5dbed7c49598ba519f1f8ae0/1597782290462-YAW0JAUEU3V8395MGASI/uyghur+food+lagman+chili+sauce-10.jpg" alt="Gouyourou Laghman - Uyghur hand-pulled noodles">
+            <span class="photo-label">Gouyourou Laghman</span>
+          </div>
+          <div class="photo-wrapper">
+            <img src="https://omnivorescookbook.com/wp-content/uploads/2016/07/1607_Xinjiang-Lamb-Skewer_004.jpg" alt="Uyghur Lamb Kebab Skewers">
+            <span class="photo-label">Uyghur Kawap</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Decorative -->
+      <div class="decorative-divider">
+        <div class="diamond"></div>
+      </div>
+
+      <!-- Featured Dishes -->
+      <div class="featured-section">
+        <h3 class="section-title">Signature Dishes</h3>
+        <p class="section-subtitle">Handcrafted with tradition, served with love</p>
+        <div class="dish-scroll">
+          <div class="dish-card">
+            <div class="img-placeholder">&#127836;</div>
+            <div class="info">
+              <h3>Big Plate Chicken Laghman</h3>
+              <p style="font-size:11px;color:var(--warm-gray);margin-bottom:2px">大盘鸡拌面</p>
+              <p>Hand-pulled noodles with tender chicken in rich spiced sauce</p>
+              <span class="price">$16.99</span>
+            </div>
+          </div>
+          <div class="dish-card">
+            <div class="img-placeholder">&#127834;</div>
+            <div class="info">
+              <h3>Uyghur Polo</h3>
+              <p style="font-size:11px;color:var(--warm-gray);margin-bottom:2px">手抓饭</p>
+              <p>Fragrant rice pilaf with lamb, carrots, and cumin</p>
+              <span class="price">$14.99</span>
+            </div>
+          </div>
+          <div class="dish-card">
+            <div class="img-placeholder">&#129386;</div>
+            <div class="info">
+              <h3>Lamb Samsa</h3>
+              <p style="font-size:11px;color:var(--warm-gray);margin-bottom:2px">烤包子</p>
+              <p>Flaky tandoor-baked pastry with seasoned lamb</p>
+              <span class="price">$4.99</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Preparation Story -->
+      <div class="prep-story">
+        <h2>Freshly Made for Every Order</h2>
+        <p class="prep-tagline">Family-operated. Every dish cooked from scratch, with love.</p>
+        <div class="prep-steps">
+          <div class="prep-step">
+            <img class="gif-circle" src="https://media1.giphy.com/media/spzjxSXCqoV379zz2d/giphy.gif" alt="Hand-pulling noodles">
+            <div class="prep-step-text">
+              <h4>Hand-Pulled to Order</h4>
+              <p>Every bowl of laghman starts with fresh dough, stretched and pulled by hand right when you order. Never pre-made, never machine-cut.</p>
+            </div>
+          </div>
+          <div class="prep-step">
+            <img class="gif-circle" src="https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExNTc1bGRrbW5leGRxbTVvcXJsc3UxemdlMHlsaTBlZTgzcWhvNnR1byZlcD12MV9naWZzX3NlYXJjaCZjdD1n/gVKp76oHhWcNXWRpOP/giphy.gif" alt="Enjoying fresh noodles">
+            <div class="prep-step-text">
+              <h4>Taste the Freshness</h4>
+              <p>You can taste the difference. Chewy, springy noodles with rich spiced sauce — the way it's been done on the Silk Road for centuries.</p>
+            </div>
+          </div>
+          <div class="prep-step">
+            <img class="gif-circle" src="https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExcW5sN2tpNHM5eHQ4NjY4OXE0OHJvbjVxM2t3YXZwaTYzdjdrY3hwMSZlcD12MV9naWZzX3NlYXJjaCZjdD1n/nm6p1Y746PmjHkctaR/giphy.gif" alt="Family cooking together">
+            <div class="prep-step-text">
+              <h4>Family-Operated Kitchen</h4>
+              <p>Our family cooks together every day — the same recipes passed down through generations. When you eat here, you're family too.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Google Reviews -->
+      <div class="reviews-section">
+        <h3 class="section-title">What People Say</h3>
+        <p class="section-subtitle">From Google Reviews</p>
+        <div style="padding-top:8px">
+          <div class="review-card">
+            <div class="review-header">
+              <div class="review-avatar">JL</div>
+              <div><div class="review-name">Jessica L.</div><div class="review-date">2 weeks ago</div></div>
+            </div>
+            <div class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+            <p class="review-text">The laghman here is incredible! Hand-pulled noodles that are perfectly chewy. Best Uyghur food I've had outside of Xinjiang.</p>
+          </div>
+          <div class="review-card">
+            <div class="review-header">
+              <div class="review-avatar">MK</div>
+              <div><div class="review-name">Michael K.</div><div class="review-date">1 month ago</div></div>
+            </div>
+            <div class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+            <p class="review-text">Amazing samsa and polo! The flavors are so authentic. Staff is incredibly friendly too.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Order Platforms -->
+      <div class="platforms-section">
+        <h3 class="section-title" style="font-size:18px">Also Order From</h3>
+        <div class="platform-buttons">
+          <button class="platform-btn"><div class="platform-dot" style="background:#FF3008"></div>DoorDash</button>
+          <button class="platform-btn"><div class="platform-dot" style="background:#06C167"></div>Uber Eats</button>
+          <button class="platform-btn"><div class="platform-dot" style="background:#F63440"></div>Grubhub</button>
+        </div>
+      </div>
+
+      <!-- About Teaser -->
+      <div class="about-teaser">
+        <div class="img-placeholder"></div>
+        <div>
+          <h3>Our Story</h3>
+          <p>From the ancient Silk Road to your table — discover the rich tradition of Uyghur cuisine, a culinary heritage spanning centuries.</p>
+          <a href="#" class="link-arrow">Learn More &rarr;</a>
+        </div>
+      </div>
+
+      <!-- Location Strip -->
+      <div class="location-strip">
+        <div class="map-thumb">&#128205;</div>
+        <div class="location-info">
+          <h4>Visit Us</h4>
+          <p>123 Silk Road Ave, Anytown, USA<br>(555) 123-4567</p>
+          <span class="open-badge">Open Now</span>
+        </div>
+      </div>
+
+      <!-- Footer -->
+      <div class="footer-geometric"></div>
+      <div class="site-footer">
+        <div class="footer-top">
+          <div class="footer-col">
+            <h4>Tengri Tagh</h4>
+            <p>Mon-Thu: 11am - 9pm</p>
+            <p>Fri-Sat: 11am - 10pm</p>
+            <p>Sunday: 12pm - 8pm</p>
+          </div>
+          <div class="footer-col">
+            <h4>Links</h4>
+            <a>Menu</a>
+            <a>Our Story</a>
+            <a>Location</a>
+            <a>Order Online</a>
+          </div>
+          <div class="footer-col">
+            <h4>Follow Us</h4>
+            <div class="social-icons">
+              <div class="social-icon">&#9641;</div>
+              <div class="social-icon">f</div>
+              <div class="social-icon">&#9836;</div>
+              <div class="social-icon">Y</div>
+            </div>
+            <p style="margin-top:8px; font-size:11px">Instagram &bull; Facebook<br>TikTok &bull; Yelp</p>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          &copy; 2026 Tengri Tagh Uyghur Cuisine. All rights reserved.
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ============================================ -->
+<!-- MENU PAGE -->
+<!-- ============================================ -->
+<section class="page-section" id="menu">
+  <h2>Menu Page</h2>
+  <p class="subtitle">Category tabs + 2-column grid with "Add to Cart" — inspired by Sweetgreen's clean menu cards</p>
+
+  <div class="device-row">
+    <div class="device-frame mobile">
+      <div class="device-label">Menu — Mobile 375px</div>
+
+      <div class="site-header">
+        <div style="display:flex;align-items:center;gap:12px">
+          <span style="font-size:18px;cursor:pointer">&larr;</span>
+          <div class="logo" style="font-size:16px">Tengri Tagh</div>
+        </div>
+        <div class="cart-icon">&#128722;<div class="cart-badge">3</div></div>
+      </div>
+
+      <div class="category-tabs">
+        <div class="category-tab active">Laghman</div>
+        <div class="category-tab">Polo</div>
+        <div class="category-tab">Kebabs</div>
+        <div class="category-tab">Samsa</div>
+        <div class="category-tab">Nan</div>
+        <div class="category-tab">Soups</div>
+        <div class="category-tab">Drinks</div>
+      </div>
+
+      <div style="padding:12px 20px;background:var(--warm-cream)">
+        <p style="font-size:13px;color:var(--warm-gray)">Laghman <span style="color:var(--charcoal);font-weight:600">&mdash; Hand-Pulled Noodles</span></p>
+      </div>
+
+      <div class="menu-grid">
+        <div class="menu-item-card">
+          <div class="img">
+            <div style="position:absolute;bottom:8px;right:8px;background:var(--gold);color:var(--charcoal);font-size:10px;padding:2px 6px;border-radius:4px;font-weight:700">POPULAR</div>
+          </div>
+          <div class="card-body">
+            <h4>Big Plate Chicken</h4>
+            <p class="name-zh">大盘鸡拌面</p>
+            <p class="desc">Hand-pulled noodles, chicken, peppers, potatoes in spiced sauce</p>
+            <div class="card-footer">
+              <span class="price">$16.99</span>
+              <button class="add-btn">+</button>
+            </div>
+          </div>
+        </div>
+        <div class="menu-item-card">
+          <div class="img"></div>
+          <div class="card-body">
+            <h4>Lamb Laghman</h4>
+            <p class="name-zh">羊肉拌面</p>
+            <p class="desc">Classic hand-pulled noodles with tender lamb and vegetables</p>
+            <div class="card-footer">
+              <span class="price">$15.99</span>
+              <button class="add-btn">+</button>
+            </div>
+          </div>
+        </div>
+        <div class="menu-item-card">
+          <div class="img"></div>
+          <div class="card-body">
+            <h4>Beef Laghman</h4>
+            <p class="name-zh">牛肉拌面</p>
+            <p class="desc">Hand-pulled noodles with stir-fried beef and fresh vegetables</p>
+            <div class="card-footer">
+              <span class="price">$15.99</span>
+              <button class="add-btn">+</button>
+            </div>
+          </div>
+        </div>
+        <div class="menu-item-card">
+          <div class="img"></div>
+          <div class="card-body">
+            <h4>Veggie Laghman</h4>
+            <p class="name-zh">素菜拌面</p>
+            <p class="desc">Hand-pulled noodles with seasonal vegetables in savory sauce</p>
+            <div class="card-footer">
+              <span class="price">$13.99</span>
+              <button class="add-btn">+</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Sticky Cart Bar -->
+      <div class="sticky-cart-bar">
+        <div class="cart-info">
+          <span>&#128722;</span>
+          <span>3 items &bull; $47.97</span>
+        </div>
+        <button class="view-cart-btn">View Cart</button>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ============================================ -->
+<!-- CART PAGE -->
+<!-- ============================================ -->
+<section class="page-section" id="cart">
+  <h2>Cart Page</h2>
+  <p class="subtitle">Clean item list with quantity controls — pay-at-pickup model</p>
+
+  <div class="device-row">
+    <div class="device-frame mobile">
+      <div class="device-label">Cart — Mobile 375px</div>
+
+      <div class="site-header">
+        <div style="display:flex;align-items:center;gap:12px">
+          <span style="font-size:18px;cursor:pointer">&larr;</span>
+          <div class="logo" style="font-size:16px">Tengri Tagh</div>
+        </div>
+        <div></div>
+      </div>
+
+      <div class="cart-header">
+        <h1>Your Order</h1>
+        <p style="font-size:13px;color:var(--warm-gray);margin-top:4px">3 items</p>
+      </div>
+
+      <div class="cart-item">
+        <div class="thumb"></div>
+        <div class="item-details">
+          <h4>Big Plate Chicken Laghman</h4>
+          <p class="note">Extra spicy</p>
+          <div class="qty-control">
+            <button class="qty-btn">&minus;</button>
+            <span class="qty-num">1</span>
+            <button class="qty-btn">+</button>
+          </div>
+        </div>
+        <div class="item-price">$16.99</div>
+      </div>
+
+      <div class="cart-item">
+        <div class="thumb"></div>
+        <div class="item-details">
+          <h4>Lamb Samsa (x2)</h4>
+          <div class="qty-control">
+            <button class="qty-btn">&minus;</button>
+            <span class="qty-num">2</span>
+            <button class="qty-btn">+</button>
+          </div>
+        </div>
+        <div class="item-price">$9.98</div>
+      </div>
+
+      <div class="cart-item">
+        <div class="thumb"></div>
+        <div class="item-details">
+          <h4>Uyghur Polo</h4>
+          <div class="qty-control">
+            <button class="qty-btn">&minus;</button>
+            <span class="qty-num">1</span>
+            <button class="qty-btn">+</button>
+          </div>
+        </div>
+        <div class="item-price">$14.99</div>
+      </div>
+
+      <div class="cart-summary">
+        <div class="row"><span>Subtotal</span><span>$41.96</span></div>
+        <div class="row"><span>Tax (estimated)</span><span>$3.67</span></div>
+        <div class="row total"><span>Total</span><span>$45.63</span></div>
+        <button class="checkout-btn">Proceed to Checkout</button>
+        <a class="continue-link" href="#">&larr; Continue Browsing</a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ============================================ -->
+<!-- CHECKOUT PAGE -->
+<!-- ============================================ -->
+<section class="page-section" id="checkout">
+  <h2>Checkout Page</h2>
+  <p class="subtitle">Minimal form: name, phone, pickup time. No payment — collected at pickup.</p>
+
+  <div class="device-row">
+    <div class="device-frame mobile">
+      <div class="device-label">Checkout — Mobile 375px</div>
+
+      <div class="site-header">
+        <div style="display:flex;align-items:center;gap:12px">
+          <span style="font-size:18px;cursor:pointer">&larr;</span>
+          <div class="logo" style="font-size:16px">Tengri Tagh</div>
+        </div>
+        <div></div>
+      </div>
+
+      <div style="padding:20px;background:var(--cream);border-bottom:1px solid var(--light-gray)">
+        <h1 style="font-family:'Playfair Display',serif;font-size:24px;color:var(--burgundy)">Checkout</h1>
+      </div>
+
+      <div class="checkout-section">
+        <h3>Your Information</h3>
+        <div class="form-group">
+          <label>Name <span class="required">*</span></label>
+          <input class="form-input" type="text" placeholder="Your name">
+        </div>
+        <div class="form-group">
+          <label>Phone <span class="required">*</span></label>
+          <input class="form-input" type="tel" placeholder="(555) 000-0000">
+        </div>
+        <div class="form-group">
+          <label>Email <span style="color:var(--warm-gray);font-weight:400">(optional)</span></label>
+          <input class="form-input" type="email" placeholder="you@email.com">
+        </div>
+      </div>
+
+      <div class="checkout-section" style="border-top:8px solid var(--warm-cream)">
+        <h3>Pickup Time</h3>
+        <div class="pickup-time-grid">
+          <div class="time-slot asap">&#9889; ASAP (~20 min)</div>
+          <div class="time-slot active">5:30 PM</div>
+          <div class="time-slot">5:45 PM</div>
+          <div class="time-slot">6:00 PM</div>
+          <div class="time-slot">6:15 PM</div>
+          <div class="time-slot">6:30 PM</div>
+        </div>
+      </div>
+
+      <div class="checkout-section" style="border-top:8px solid var(--warm-cream)">
+        <h3>Note to Kitchen</h3>
+        <div class="form-group">
+          <textarea class="form-input" rows="2" placeholder="Any special requests..." style="resize:none"></textarea>
+        </div>
+      </div>
+
+      <div class="checkout-section" style="border-top:8px solid var(--warm-cream)">
+        <div class="payment-notice">
+          &#128179;&ensp; <strong>Payment will be collected at pickup</strong>
+        </div>
+
+        <div style="margin-top:20px">
+          <div class="cart-summary" style="padding:0">
+            <div class="row"><span>Big Plate Chicken Laghman x1</span><span>$16.99</span></div>
+            <div class="row"><span>Lamb Samsa x2</span><span>$9.98</span></div>
+            <div class="row"><span>Uyghur Polo x1</span><span>$14.99</span></div>
+            <div class="row total"><span>Total</span><span>$45.63</span></div>
+          </div>
+        </div>
+
+        <button class="checkout-btn" style="margin-top:20px">Place Order</button>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ============================================ -->
+<!-- ORDER CONFIRMATION -->
+<!-- ============================================ -->
+<section class="page-section" id="confirmation">
+  <h2>Order Confirmation</h2>
+  <p class="subtitle">Success state with live status tracker — auto-refreshes every 30 seconds</p>
+
+  <div class="device-row">
+    <div class="device-frame mobile">
+      <div class="device-label">Confirmation — Mobile 375px</div>
+
+      <div class="site-header">
+        <div class="logo">Tengri Tagh<small>Uyghur Cuisine</small></div>
+        <div></div>
+      </div>
+
+      <div class="confirmation-hero">
+        <div class="check-circle">&#10003;</div>
+        <h1>Order Confirmed!</h1>
+        <p class="order-num">Order #1003 &bull; Pickup at 5:30 PM</p>
+      </div>
+
+      <div class="status-tracker">
+        <div class="status-step completed active-step">
+          <div class="status-dot done">&#10003;</div>
+          <span class="status-label">Received</span>
+        </div>
+        <div class="status-step active-step">
+          <div class="status-dot active">&#9679;</div>
+          <span class="status-label">Preparing</span>
+        </div>
+        <div class="status-step">
+          <div class="status-dot"></div>
+          <span class="status-label">Ready</span>
+        </div>
+      </div>
+
+      <div style="padding:20px;background:var(--cream)">
+        <p style="font-size:14px;font-weight:600;margin-bottom:12px">Order Summary</p>
+        <div class="cart-summary" style="padding:0;background:transparent">
+          <div class="row"><span>Big Plate Chicken Laghman x1</span><span>$16.99</span></div>
+          <div class="row"><span>Lamb Samsa x2</span><span>$9.98</span></div>
+          <div class="row"><span>Uyghur Polo x1</span><span>$14.99</span></div>
+          <div class="row total"><span>Total (pay at pickup)</span><span>$45.63</span></div>
+        </div>
+      </div>
+
+      <div style="padding:20px">
+        <div style="background:var(--cream);border-radius:8px;padding:16px;font-size:13px;line-height:1.6">
+          <strong>&#128205; Pickup Location</strong><br>
+          123 Silk Road Ave, Anytown, USA<br>
+          <strong>&#128222;</strong> (555) 123-4567<br><br>
+          <em style="color:var(--warm-gray)">Your order has been sent to the kitchen. This page will update automatically when your order is ready.</em>
+        </div>
+      </div>
+
+      <div class="footer-geometric"></div>
+      <div class="site-footer">
+        <div class="footer-bottom" style="border:none;padding:16px 0">
+          &copy; 2026 Tengri Tagh Uyghur Cuisine
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<div style="height:80px"></div>
+
+<script>
+// Simple nav highlighting
+document.querySelectorAll('.wireframe-nav a').forEach(a => {
+  a.addEventListener('click', () => {
+    document.querySelectorAll('.wireframe-nav a').forEach(n => n.classList.remove('active'));
+    a.classList.add('active');
+  });
+});
+</script>
+
+</body>
+</html>
