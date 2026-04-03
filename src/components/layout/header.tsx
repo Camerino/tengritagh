@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { Phone, ShoppingCart } from 'lucide-react';
 import { MobileNav } from './mobile-nav';
+import { HeaderCartBadge } from './header-cart-badge';
 
 const navLinks = [
   { href: '/', label: 'Home' },
@@ -50,6 +51,7 @@ export function Header() {
             aria-label="Shopping cart"
           >
             <ShoppingCart className="text-charcoal h-5 w-5" />
+            <HeaderCartBadge />
           </Link>
 
           {/* Mobile hamburger */}

@@ -63,6 +63,7 @@ export function MenuGrid({ categories, items, categorySlugMap }: MenuGridProps) 
         {filteredItems.map((item) => (
           <MenuItemCard
             key={item.id}
+            id={item.id}
             name={item.name}
             nameZh={item.nameZh}
             description={item.description}
