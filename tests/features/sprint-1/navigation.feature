@@ -87,11 +87,10 @@ Feature: Navigation
     Then I should be navigated to "<path>"
 
     Examples:
-      | link     | path      |
-      | Home     | /         |
-      | Menu     | /menu     |
-      | About    | /about    |
-      | Location | /location |
+      | link             | path      |
+      | Menu             | /menu     |
+      | About Us         | /about    |
+      | Location & Hours | /location |
 
   Scenario: Footer social media links open in new tab
     When I inspect the social media links in the footer

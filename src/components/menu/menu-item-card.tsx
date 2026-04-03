@@ -37,7 +37,7 @@ export function MenuItemCard({
 
   if (isAvailable === 0) {
     return (
-      <Card className="opacity-50" data-testid="menu-item">
+      <Card className="opacity-50" data-testid="menu-item-card">
         <div className="relative h-36 w-full bg-gradient-to-br from-gray-200 to-gray-300">
           <div className="flex h-full items-center justify-center">
             <span className="text-sm font-medium text-gray-500">Unavailable</span>
@@ -83,7 +83,7 @@ export function MenuItemCard({
     <>
       <Card
         className="flex cursor-pointer flex-col overflow-hidden transition-shadow hover:shadow-md"
-        data-testid="menu-item"
+        data-testid="menu-item-card"
         onClick={() => setDetailOpen(true)}
       >
         <div className={`relative h-36 w-full bg-gradient-to-br ${gradient}`}>
@@ -115,7 +115,7 @@ export function MenuItemCard({
               type="button"
               aria-label={`Add ${name} to cart`}
               className="flex h-8 w-8 items-center justify-center rounded-full bg-[#C75B39] text-white transition-colors hover:bg-[#C75B39]/90"
-              data-testid="add-to-cart-button"
+              data-testid="add-to-cart"
               onClick={handleAddToCart}
             >
               <Plus className="h-4 w-4" />

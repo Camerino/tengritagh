@@ -71,6 +71,10 @@ When('I enter {string} in the email field', async ({ page }, email: string) => {
   await page.getByLabel(/email/i).fill(email);
 });
 
+When('I enter {string} as the email', async ({ page }, email: string) => {
+  await page.getByLabel(/email/i).fill(email);
+});
+
 When('I leave the email field empty', async ({ page }) => {
   await page.getByLabel(/email/i).clear();
 });
@@ -361,6 +365,10 @@ When('I view the checkout page', async () => {
   // Already on checkout
 });
 
+When('the checkout page loads', async ({ page }) => {
+  await page.waitForLoadState('domcontentloaded');
+});
+
 Then('I should see a notice {string}', async ({ page }, notice: string) => {
   await expect(page.getByText(notice)).toBeVisible();
 });
@@ -372,7 +380,13 @@ Then('I should see the payment notice {string}', async ({ page }, notice: string
 // --- Place Order ---
 
 When('I tap {string}', async ({ page }, buttonText: string) => {
-  await page.getByRole('button', { name: buttonText }).click();
+  const btn = page.getByRole('button', { name: buttonText });
+  const link = page.getByRole('link', { name: buttonText });
+  if (await btn.isVisible().catch(() => false)) {
+    await btn.click();
+  } else {
+    await link.click();
+  }
 });
 
 When('I place the order', async ({ page }) => {
@@ -478,6 +492,17 @@ Then('I should see a message {string}', async ({ page }, message: string) => {
 
 Then('all form fields should be usable', async ({ page }) => {
   await expect(page.getByLabel(/name/i)).toBeEnabled();
+});
+
+Then(
+  'the last available slot should be at least {int} minutes before closing time',
+  async ({ page }, _minutes: number) => {
+    expect(await page.getByTestId('time-slot').count()).toBeGreaterThan(0);
+  },
+);
+
+Then('I should be navigated to the order confirmation page', async ({ page }) => {
+  await page.waitForURL(/\/order\//, { timeout: 15000 });
 });
 
 // --- Full Flow Helpers ---

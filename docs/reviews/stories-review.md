@@ -343,4 +343,46 @@ Comparing the plan in `greedy-beaming-conway.md` against stories:
 
 ## Fixes Applied
 
-See the "Changes Made" section at the end of this document for all edits applied to story files and step definitions.
+### Changes Made
+
+**Step Definition Fixes (tests/steps/):**
+
+1. **common.steps.ts:** Removed duplicate `Then('the page title should contain')` (kept in visibility.steps.ts). Moved `import { expect }` from bottom of file to top. Replaced all `waitForLoadState('networkidle')` with `domcontentloaded`. Added `Given/When('I am viewing at {int}px viewport width')` step patterns to match story Gherkin wording.
+
+2. **order.steps.ts:** Removed duplicate `Then('I should see {string}')` (kept in visibility.steps.ts). Replaced all `networkidle` with `domcontentloaded`. Implemented previously empty `'{string} and {string} should be greyed out'` and `'{string} and {string} should show checkmarks'` step bodies. Replaced hardcoded `waitForTimeout(35000)` in polling steps with `page.waitForResponse()`.
+
+3. **order-status.steps.ts:** Fixed hardcoded `{ state: 'ready' }` to use the actual `status` parameter passed to the step, with a mapping from internal status names to Clover state values.
+
+4. **menu.steps.ts:** Standardized `data-testid="menu-item"` to `data-testid="menu-item-card"` throughout. Also fixed the `getByTestId('menu-item')` count step at the bottom.
+
+5. **cart.steps.ts:** Standardized `data-testid` to `menu-item-card`. Replaced `networkidle` with `domcontentloaded`. Replaced `waitForTimeout(300)` in the loop with a toast-based wait.
+
+6. **navigation.steps.ts:** Replaced `networkidle` with `domcontentloaded`.
+
+7. **checkout.steps.ts:** Added missing step definitions for store hours (`Given the store is currently open/closed`), item detail modal (`When I open the item detail modal for`, `When I set the quantity to`, `When I enter special instructions`, `When I press the Escape key`, `When I click outside the modal`, `Then the modal closes`, `Then the quantity stepper shows`, `When I tap the plus/minus button`).
+
+**Story File Fixes (docs/stories/):**
+
+8. **S1-01-homepage.md:** Split the multi-When "Times Square location link opens Google Maps" scenario into two independent scenarios (link visibility and navigation).
+
+9. **S2-06-checkout-page.md:** Split the multi-When "Errors show on blur not on every keystroke" scenario into "Validation errors do not appear while typing" and "Validation errors appear after leaving a field." Added missing dependencies on S2-09 (Store Hours) and S2-10 (Pickup Time Rules).
+
+10. **S2-11-ordering-e2e-tests.md:** Added four new edge case scenarios: item becomes unavailable before order, browser back button after placing order, network error during placement, and keyboard-only ordering flow.
+
+11. **S0-03-database-schema.md:** Added "retrying" to the cloverSyncStatus enum to match S3-04's requirement.
+
+### What I Rejected / Did Not Change
+
+1. **Did NOT rewrite S2-01 (Cart Store) as Vitest tests.** While the scenarios test internal APIs, they serve as clear acceptance criteria for the store implementation. They should be implemented as Vitest unit tests, but the Gherkin documentation value is worth keeping in the story file as a specification. Added a note in the review about this.
+
+2. **Did NOT rewrite S2-07 (Place Order) scenarios.** Same reasoning -- the server action scenarios document expected behavior and serve as a contract. They should be validated via Vitest integration tests, not Playwright BDD.
+
+3. **Did NOT remove Sprint 0 infrastructure Gherkin.** While S0-01 through S0-06 are not true BDD, they serve as verifiable setup checklists and are clearly labeled as developer stories. Changing them would not improve quality.
+
+4. **Did NOT standardize all "tap" to "click" in story files.** This would be a massive find-and-replace across 20+ files with high risk of introducing mismatches. The step definitions already handle both verbs. Recommended for a future cleanup pass.
+
+5. **Did NOT convert L5 CSS/visual detail scenarios to visual regression tests.** These are design system verification scenarios that are acceptably in Gherkin format for this project's maturity level.
+
+6. **Did NOT change L2 viewport height inconsistencies.** The height differences (800 vs 812 vs 720) are minor and unlikely to cause test failures. Standardizing would require coordinating across config and step files.
+
+7. **Did NOT add a dedicated Sprint 3 accessibility audit story.** This was flagged as a gap but creating a new story file is beyond the scope of this review. Recommended for the team to create.

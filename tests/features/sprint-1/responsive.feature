@@ -112,7 +112,7 @@ Feature: Responsive Design
 
   # --- Cross-Page Responsive ---
 
-  Scenario Outline: No overflow on any page at <width>px
+  Scenario Outline: No overflow on <path> at <width>px
     Given I am viewing the site at <width>px viewport width
     When I navigate to "<path>"
     Then there should be no horizontal overflow

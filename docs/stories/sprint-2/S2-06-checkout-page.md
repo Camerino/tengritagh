@@ -252,6 +252,8 @@ Feature: Checkout Page
 
 - S2-01 (Cart Store -- reads cart items for order summary)
 - S2-05 (Cart Page -- customer navigates from cart to checkout)
+- S2-09 (Store Hours -- checkout must respect open/closed state)
+- S2-10 (Pickup Time Rules -- pickup time selector logic)
 - S0-04 (Layout Shell)
 
 ## Priority

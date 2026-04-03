@@ -50,6 +50,15 @@ Given(
   },
 );
 
+Given(
+  'the mock Clover server returns {int} for {int} requests then succeeds',
+  async ({ page }, statusCode: number, count: number) => {
+    await page.request.post(`${MOCK_CLOVER}/__admin/config`, {
+      data: { failNext: count, statusCode },
+    });
+  },
+);
+
 Given('the mock Clover server returns 500 for all requests', async ({ page }) => {
   await page.request.post(`${MOCK_CLOVER}/__admin/config`, {
     data: { failNext: 100, statusCode: 500 },
@@ -452,13 +461,17 @@ Given(
     await page.waitForLoadState('networkidle');
     for (let i = 0; i < qty1; i++) {
       await page
-        .locator(`[data-testid="menu-item"]:has-text("${item1}") button[data-testid="add-to-cart"]`)
+        .locator(
+          `[data-testid="menu-item-card"]:has-text("${item1}") button[data-testid="add-to-cart"]`,
+        )
         .click();
       await page.waitForTimeout(200);
     }
     for (let i = 0; i < qty2; i++) {
       await page
-        .locator(`[data-testid="menu-item"]:has-text("${item2}") button[data-testid="add-to-cart"]`)
+        .locator(
+          `[data-testid="menu-item-card"]:has-text("${item2}") button[data-testid="add-to-cart"]`,
+        )
         .click();
       await page.waitForTimeout(200);
     }
@@ -470,7 +483,7 @@ Given(
   async ({ page }, itemName: string, instructions: string) => {
     await page.goto('/menu');
     await page.waitForLoadState('networkidle');
-    await page.locator(`[data-testid="menu-item"]:has-text("${itemName}")`).click();
+    await page.locator(`[data-testid="menu-item-card"]:has-text("${itemName}")`).click();
     await page.locator('[role="dialog"]').waitFor({ state: 'visible' });
     await page.getByPlaceholder(/special instructions/i).fill(instructions);
     await page
@@ -485,7 +498,7 @@ When('I add items and place a new order', async ({ page }) => {
   await page.goto('/menu');
   await page.waitForLoadState('networkidle');
   await page
-    .locator('[data-testid="menu-item"]')
+    .locator('[data-testid="menu-item-card"]')
     .first()
     .locator('button[data-testid="add-to-cart"]')
     .click();

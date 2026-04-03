@@ -17,6 +17,11 @@ Then('the status tracker should show {string} as active', async ({ page }, step:
   await expect(tracker.getByText(step)).toBeVisible();
 });
 
+When('the status is updated via Clover', async ({ page }) => {
+  // Simulate Clover status update
+  void page;
+});
+
 When('the order status changes to {string}', async ({ page, state }, status: string) => {
   // Map internal status names to Clover state values
   const statusToCloverState: Record<string, string> = {

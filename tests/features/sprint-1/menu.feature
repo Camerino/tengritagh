@@ -56,12 +56,11 @@ Feature: Menu Page
     Examples:
       | english_name               | chinese_name |
       | Gouyourou Laghman          | 过油肉拌面   |
-      | Suoman Laghman             | 梭蛮拌面     |
-      | Big Plate Chicken Noodle   | 大盘鸡       |
+      | Suoman                     | 炒面         |
+      | Big Plate Chicken Laghman  | 大盘鸡拌面   |
       | Uyghur Polo                | 手抓饭       |
-      | Uyghur Lamb Kawap          | 烤羊肉串     |
       | Lamb Samsa                 | 烤包子       |
-      | Uyghur Nan Bread           | 馕           |
+      | Plain Nan                  | 馕           |
 
   Scenario: Featured items display POPULAR badge
     When I view a menu item that is marked as featured

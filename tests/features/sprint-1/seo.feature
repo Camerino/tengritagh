@@ -14,7 +14,7 @@ Feature: SEO and Metadata
       | path      | title_fragment                    |
       | /         | Tengri Tagh Uyghur Cuisine        |
       | /menu     | Menu                              |
-      | /about    | About                             |
+      | /about    | Our Story                         |
       | /location | Location                          |
 
   Scenario Outline: Each page has a meta description

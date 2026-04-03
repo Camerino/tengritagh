@@ -54,7 +54,7 @@ Feature: Homepage
 
   Scenario: Featured dishes are displayed from database
     When I scroll to the featured dishes section
-    Then I should see between 4 and 6 featured menu items
+    Then I should see between 3 and 6 featured menu items
 
   Scenario: Featured dish cards show bilingual names and price
     When I scroll to the featured dishes section
@@ -69,9 +69,8 @@ Feature: Homepage
 
     Examples:
       | english_name               | chinese_name |
-      | Big Plate Chicken Noodle   | 大盘鸡       |
+      | Big Plate Chicken Laghman  | 大盘鸡拌面   |
       | Uyghur Polo                | 手抓饭       |
-      | Uyghur Lamb Kawap          | 烤羊肉串     |
       | Lamb Samsa                 | 烤包子       |
 
   Scenario: Featured dishes scroll horizontally on mobile

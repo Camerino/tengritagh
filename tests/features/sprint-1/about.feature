@@ -12,7 +12,7 @@ Feature: About Page
 
   Scenario: Page title is correct
     When I check the document title
-    Then it should be "About | Tengri Tagh Uyghur Cuisine"
+    Then it should be "Our Story | Tengri Tagh Uyghur Cuisine"
 
   Scenario: Hero banner is displayed
     When I view the top of the about page
