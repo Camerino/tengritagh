@@ -94,6 +94,16 @@ Feature: Clover Sync Must Succeed Before Order Confirmation
       | 3          | 7            |
       | 4          | 9            |
 
+  Scenario: Support ticket email sent when Clover sync fails
+    Given the mock Clover service is down
+    When I fill in valid customer information
+    And I select ASAP pickup
+    And I place the order
+    And after 10 seconds I should see an error message
+    Then a support ticket email should be queued
+    And the email should contain the order number
+    And the email should contain the customer name and phone
+
   Scenario: Mobile viewport shows loading and error states correctly
     Given I am using a "mobile" device
     And the mock Clover service is down

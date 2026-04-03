@@ -169,8 +169,9 @@ export default function CheckoutPage() {
         <div className="text-5xl">&#x1F614;</div>
         <h2 className="font-heading text-xl text-[#4A0E0E]">Oops... something happened</h2>
         <p className="max-w-md text-sm text-[#8B8178]">
-          We&apos;ll fix it shortly. Please try again or call the restaurant to place your order
-          while we work on the fix.
+          We&apos;ll fix it shortly. Please try again or call the restaurant at{' '}
+          {process.env.NEXT_PUBLIC_RESTAURANT_PHONE ?? '(555) 123-4567'} to place your order while
+          we work on the fix.
         </p>
         <div className="flex w-full max-w-xs flex-col gap-3">
           <Button
@@ -181,11 +182,12 @@ export default function CheckoutPage() {
             Try Again
           </Button>
           <a
-            href="tel:+15551234567"
-            className="text-center font-semibold text-[#C75B39]"
+            href={`tel:${(process.env.NEXT_PUBLIC_RESTAURANT_PHONE ?? '(555) 123-4567').replace(/[^+\d]/g, '')}`}
+            className="flex min-h-[44px] items-center justify-center py-3 text-center font-semibold text-[#C75B39]"
             data-testid="call-restaurant-link"
           >
-            &#x1F4DE; Call Restaurant: (555) 123-4567
+            &#x1F4DE; Call Restaurant:{' '}
+            {process.env.NEXT_PUBLIC_RESTAURANT_PHONE ?? '(555) 123-4567'}
           </a>
         </div>
       </div>
@@ -199,9 +201,11 @@ export default function CheckoutPage() {
         className="flex min-h-[50vh] flex-col items-center justify-center gap-4"
         data-testid="syncing-message"
       >
-        <Loader2 className="h-12 w-12 animate-spin text-[#D4A84B]" />
-        <h2 className="font-heading text-xl text-[#4A0E0E]">Getting your order through...</h2>
-        <p className="text-sm text-[#8B8178]">hang tight!</p>
+        <Loader2 className="h-12 w-12 animate-spin text-[#D4A84B]" data-testid="loading-spinner" />
+        <p className="font-heading text-xl text-[#4A0E0E]">
+          Getting your order through...{' '}
+          <span className="text-sm font-normal text-[#8B8178]">hang tight!</span>
+        </p>
       </div>
     );
   }
