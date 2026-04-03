@@ -333,8 +333,9 @@ Then('the confirmation page should load without waiting for Clover sync', async 
 
 Then(
   'an orderStatusEvent should be created with source {string}',
-  async ({ page }, _ /* source */ : string) => {
+  async ({ page }, _source: string) => {
     // Verify via API or DB query helper
+    void page;
   },
 );
 
@@ -350,7 +351,7 @@ Then('the Clover sync should succeed on the 3rd attempt', async ({ page }) => {
 
 Then(
   'the sync should be attempted {int} times \\(initial + {int} retries)',
-  async ({ page }, _ /* total */ : number, _ /* retries */ : number) => {
+  async ({ page }, _total: number, _retries: number) => {
     await page.waitForTimeout(20000);
   },
 );
@@ -402,22 +403,22 @@ Then('the retry delays should be approximately 1s, 2s, and 4s', async () => {
 
 Then(
   'the orderStatusEvents table should have {int} entries for this order',
-  async ({ page }, _ /* count */ : number) => {
+  async ({ page }, _count: number) => {
     // Verify via API or DB query
+    void page;
   },
 );
 
-Then(
-  'the orderStatusEvent source should be {string}',
-  async ({ page }, _ /* source */ : string) => {
-    // Verify via API or DB query
-  },
-);
+Then('the orderStatusEvent source should be {string}', async ({ page }, _source: string) => {
+  // Verify via API or DB query
+  void page;
+});
 
 Then(
   'the first orderStatusEvent should have status {string} and source {string}',
-  async ({ page }, _ /* status */ : string, _ /* source */ : string) => {
+  async ({ page }, _status: string, _source: string) => {
     // Verify via API or DB query
+    void page;
   },
 );
 
@@ -430,7 +431,7 @@ Given('there are orders with cloverSyncStatus {string} in the last 24 hours', as
 When('I query the health check endpoint', async ({ page }) => {
   const res = await page.request.get('/api/health');
   const data = await res.json();
-  (page as Record<string, unknown>).__healthResponse = data;
+  (page as unknown as Record<string, unknown>).__healthResponse = data;
 });
 
 Then(

@@ -2,7 +2,7 @@ import { expect } from '@playwright/test';
 import { createBdd } from 'playwright-bdd';
 import { test } from './fixtures';
 
-const { Given, When, Then } = createBdd(test);
+const { When, Then } = createBdd(test);
 
 // ============================================================
 // ORDER STATUS — Steps for tracking order status

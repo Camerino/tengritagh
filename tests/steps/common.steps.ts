@@ -25,7 +25,15 @@ Given('I am viewing the site at {int}px viewport width', async ({ page }, width:
   await page.setViewportSize({ width, height: 800 });
 });
 
+Given('I am viewing at {int}px viewport width', async ({ page }, width: number) => {
+  await page.setViewportSize({ width, height: 800 });
+});
+
 When('I am viewing the site at {int}px viewport width', async ({ page }, width: number) => {
+  await page.setViewportSize({ width, height: 800 });
+});
+
+When('I am viewing at {int}px viewport width', async ({ page }, width: number) => {
   await page.setViewportSize({ width, height: 800 });
 });
 
@@ -137,12 +145,14 @@ Then('a hamburger menu icon should be visible', async ({ page }) => {
 Then('the desktop horizontal nav links should be hidden', async ({ page }) => {
   // Desktop nav links should be hidden on mobile
   const desktopNav = page.locator('header nav.hidden, header nav.md\\:flex');
+  void desktopNav;
   // Verify at least one nav element is hidden
   // Implementation depends on actual markup
 });
 
 Then('desktop horizontal nav links should be hidden', async ({ page }) => {
   // Desktop-only nav container should not be visible on mobile
+  void page;
   // Implementation depends on actual markup
 });
 
@@ -252,6 +262,7 @@ Then('the lang attribute should be {string}', async ({ page }, lang: string) => 
 
 When('I check the document title', async ({ page }) => {
   // Title will be checked in the Then step
+  void page;
 });
 
 Then('it should be {string}', async ({ page }, expectedTitle: string) => {

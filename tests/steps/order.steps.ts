@@ -163,7 +163,7 @@ Then(
 
 Then(
   'I should see {string} with quantity {int}',
-  async ({ page }, itemName: string, qty: number) => {
+  async ({ page }, itemName: string, _qty: number) => {
     const itemRow = page.locator(`[data-testid="cart-item"]:has-text("${itemName}")`);
     await expect(itemRow).toBeVisible();
   },
@@ -245,17 +245,20 @@ Then('a notice to call the restaurant should be displayed', async ({ page }) => 
 
 // --- Status Polling ---
 
-Given('the order status is changed to {string} on Clover', async ({ page }, status: string) => {
+Given('the order status is changed to {string} on Clover', async ({ page }, _status: string) => {
   // Use mock Clover API to change order status
   // This would need a test helper to call the mock Clover PUT endpoint
+  void page;
 });
 
-Given('the order status is changed to {string}', async ({ page }, status: string) => {
+Given('the order status is changed to {string}', async ({ page }, _status: string) => {
   // Update order status via test helper
+  void page;
 });
 
-Given('the order status reaches {string}', async ({ page }, status: string) => {
+Given('the order status reaches {string}', async ({ page }, _status: string) => {
   // Simulate reaching a terminal status
+  void page;
 });
 
 When('I wait for the next status poll on the confirmation page', async ({ page }) => {
@@ -275,6 +278,7 @@ When('I wait for the next status poll', async ({ page }) => {
 
 When('I am on the confirmation page', async ({ page }) => {
   // Already on confirmation page from Given
+  void page;
 });
 
 Then('a status check request should be made approximately every 30 seconds', async ({ page }) => {
@@ -310,12 +314,14 @@ When('I wait beyond the next poll interval', async ({ page }) => {
 
 When('the order goes through received, preparing, and ready', async ({ page }) => {
   // Simulate status transitions via mock API
+  void page;
 });
 
 // --- Clover Sync Status ---
 
 Given('the Clover sync failed', async ({ page }) => {
   // Ensure the order's cloverSyncStatus is "failed"
+  void page;
 });
 
 Then('the page should still load correctly', async ({ page }) => {
@@ -338,7 +344,7 @@ Then('the quantity should show {int}', async ({ page }, qty: number) => {
   await expect(page.getByText(String(qty))).toBeVisible();
 });
 
-Then('the line total should be correct for {int} units', async ({ page }, qty: number) => {
+Then('the line total should be correct for {int} units', async ({ page }, _qty: number) => {
   // Verify line total is price * qty
   await expect(page.getByText(/\$\d+\.\d{2}/)).toBeVisible();
 });

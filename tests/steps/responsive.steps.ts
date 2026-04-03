@@ -17,7 +17,7 @@ const viewports: Record<string, { width: number; height: number }> = {
 };
 
 Given('I am using a {string} device', async ({ page }, device: string) => {
-  const vp = viewports[device.toLowerCase()] ?? viewports['desktop'];
+  const vp = viewports[device.toLowerCase()] ?? { width: 1280, height: 720 };
   await page.setViewportSize(vp);
 });
 
