@@ -5,16 +5,16 @@ interface DayHours {
   close: number;
 }
 
-// Default hours: Mon-Thu 11am-9pm, Fri-Sat 11am-10pm, Sun 12pm-8pm
+// Default hours: Mon-Thu 11am-10pm, Fri-Sat 11am-11pm, Sun 12pm-9pm
 // dayOfWeek: 0=Sunday, 1=Monday, ..., 6=Saturday
 const DEFAULT_HOURS: Record<number, DayHours> = {
-  0: { open: 720, close: 1200 }, // Sunday 12pm-8pm
-  1: { open: 660, close: 1260 }, // Monday 11am-9pm
-  2: { open: 660, close: 1260 }, // Tuesday 11am-9pm
-  3: { open: 660, close: 1260 }, // Wednesday 11am-9pm
-  4: { open: 660, close: 1260 }, // Thursday 11am-9pm
-  5: { open: 660, close: 1320 }, // Friday 11am-10pm
-  6: { open: 660, close: 1320 }, // Saturday 11am-10pm
+  0: { open: 720, close: 1260 }, // Sunday 12pm-9pm
+  1: { open: 660, close: 1320 }, // Monday 11am-10pm
+  2: { open: 660, close: 1320 }, // Tuesday 11am-10pm
+  3: { open: 660, close: 1320 }, // Wednesday 11am-10pm
+  4: { open: 660, close: 1320 }, // Thursday 11am-10pm
+  5: { open: 660, close: 1380 }, // Friday 11am-11pm
+  6: { open: 660, close: 1380 }, // Saturday 11am-11pm
 };
 
 export function getHoursForDay(dayOfWeek: number): DayHours | undefined {

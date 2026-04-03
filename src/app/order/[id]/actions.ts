@@ -1,6 +1,6 @@
 'use server';
 
-import { getOrderById, updateOrderStatus as dbUpdateOrderStatus } from '@/db/queries/orders';
+import { getOrderById } from '@/db/queries/orders';
 
 export async function getOrderStatus(orderId: string) {
   const order = await getOrderById(orderId);
@@ -21,6 +21,8 @@ export async function getOrderStatus(orderId: string) {
   };
 }
 
-export async function updateOrderStatus(orderId: string, status: string, source: string) {
-  await dbUpdateOrderStatus(orderId, status, source);
-}
+// NOTE: updateOrderStatus has been removed from client-facing server actions
+// for security reasons. Order status should only be updated via:
+// - The Clover sync process (server-side)
+// - An authenticated admin API (to be built in V2)
+// Use the db query directly from server-side code when needed.

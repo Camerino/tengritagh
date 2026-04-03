@@ -1,10 +1,13 @@
 'use server';
 
 import { z } from 'zod';
+import { inArray } from 'drizzle-orm';
 import { isStoreOpen, getEstimatedWaitMinutes } from '@/lib/store-hours';
 import { isValidPickupTime } from '@/lib/pickup-times';
 import { createOrder, getOrderByIdempotencyKey } from '@/db/queries/orders';
 import { syncOrderToClover } from '@/lib/clover-sync';
+import { db } from '@/db';
+import { menuItems } from '@/db/schema';
 
 const placeOrderSchema = z.object({
   customerName: z.string().min(1, 'Name is required').max(100),
@@ -18,7 +21,7 @@ const placeOrderSchema = z.object({
       z.object({
         menuItemId: z.string(),
         name: z.string(),
-        priceCents: z.number().int(),
+        priceCents: z.number().int().min(0),
         quantity: z.number().int().min(1).max(20),
         specialInstructions: z.string().max(200).optional(),
       }),
@@ -81,8 +84,49 @@ export async function placeOrder(input: PlaceOrderInput): Promise<PlaceOrderResu
     };
   }
 
-  // 5. Calculate subtotal
-  const subtotalCents = data.items.reduce((sum, item) => sum + item.priceCents * item.quantity, 0);
+  // 5. Verify prices against database (never trust client-submitted prices)
+  const menuItemIds = data.items.map((item) => item.menuItemId);
+  const dbItems = await db
+    .select({
+      id: menuItems.id,
+      price: menuItems.price,
+      name: menuItems.name,
+      isAvailable: menuItems.isAvailable,
+    })
+    .from(menuItems)
+    .where(inArray(menuItems.id, menuItemIds));
+
+  const dbItemMap = new Map(dbItems.map((item) => [item.id, item]));
+
+  const verifiedItems = [];
+  for (const item of data.items) {
+    const dbItem = dbItemMap.get(item.menuItemId);
+    if (!dbItem) {
+      return {
+        success: false,
+        error: `Menu item "${item.name}" is no longer available.`,
+      };
+    }
+    if (dbItem.isAvailable === 0) {
+      return {
+        success: false,
+        error: `"${dbItem.name}" is currently unavailable.`,
+      };
+    }
+    // Use the database price, not the client-submitted price
+    verifiedItems.push({
+      menuItemId: item.menuItemId,
+      name: dbItem.name,
+      priceCents: dbItem.price,
+      quantity: item.quantity,
+      specialInstructions: item.specialInstructions,
+    });
+  }
+
+  const subtotalCents = verifiedItems.reduce(
+    (sum, item) => sum + item.priceCents * item.quantity,
+    0,
+  );
 
   // 6. Save order to SQLite
   try {
@@ -93,7 +137,7 @@ export async function placeOrder(input: PlaceOrderInput): Promise<PlaceOrderResu
       pickupTime: data.pickupTime,
       kitchenNote: data.kitchenNote,
       idempotencyKey: data.idempotencyKey,
-      items: data.items,
+      items: verifiedItems,
       subtotalCents,
     });
 
